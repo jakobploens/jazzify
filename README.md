@@ -5,6 +5,8 @@ Jazzify is a collection of often used little helper functions. Like jQuery in ea
 ### Functions
 
 ```javascript
+object = document.querySelector('.selector');
+
 // Add className to object
 object.addClass('className');
 
@@ -17,19 +19,15 @@ object.hasClass('className');
 // Toggle a class of object
 object.toggleClass('className');
 
-// Merge two objects
-merge(objectA, objectB);
-```
+// Remove object from DOM
+object.remove();
 
-### Functions Roadmap
-
-```javascript
 // Add CSS to object or get style
 object.css('style', 'style');
 
 // Get or set data
 object.data('data-attribute', 'value');
 
-// Remove object from DOM
-object.remove();
+// Merge two objects
+merge(objectA, objectB);
 ```

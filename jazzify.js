@@ -3,7 +3,19 @@
  *
  * @copyright Jakob Ploens 2016
  * @author    Jakob Ploens <jakob@2helden.com>
+ * @version   1.1
  */
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * Object prototype functions
+ * Use like object.addClass(), where object = document.querySelector('.elem')
+ *
+ * @since 1.0
+ * -----------------------------------------------------------------------------
+ */
+
 
 /**
  * addClass
@@ -18,7 +30,6 @@ Object.prototype.addClass = function(className){
     } else {
         this.className += ' ' + className;
     }
-    return this;
 };
 
 /**
@@ -74,6 +85,56 @@ Object.prototype.toggleClass = function(className){
         this.className = classes.join(' ');
     }
 };
+
+/**
+ * remove
+ *
+ * @return object
+ * @since  1.1
+ */
+Object.prototype.remove = function(){
+    this.parentNode.removeChild(this);
+};
+
+/**
+ * css
+ *
+ * @return object or css value
+ * @since  1.1
+ */
+Object.prototype.css = function(name, value){
+    if(value && value !== ""){
+        this.style[name] = value;
+    } else {
+        return this.style[name];
+    }
+};
+
+/**
+ * data
+ *
+ * @return object or data value
+ * @since  1.1
+ */
+Object.prototype.data = function(name, value){
+    if(value && value !== ""){
+        this.setAttribute('data-' + name) = value;
+    } else {
+        return this.getAttribute('data-' + name);
+    }
+};
+
+
+
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * Helper functions
+ *
+ * @since 1.0
+ * -----------------------------------------------------------------------------
+ */
 
 /**
  * Short function to merge two objects.

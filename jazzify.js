@@ -143,7 +143,7 @@ Object.prototype.data = function(name, value){
  * @param  object (overwrites)
  * @return object (merged)
  */
-function merge(objectA, objectB){
+var merge = function(objectA, objectB){
     var result = {};
     for(var attr in objectA){
         result[attr] = objectA[attr];
@@ -152,4 +152,11 @@ function merge(objectA, objectB){
         result[attr] = objectB[attr];
     }
     return result;
-}
+};
+
+/**
+ * Shortcut for $
+ */
+var $ = function(selector){
+    return document.querySelectorAll(selector);
+};

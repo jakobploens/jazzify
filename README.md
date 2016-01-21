@@ -5,7 +5,10 @@ Jazzify is a collection of often used little helper functions. Like jQuery in ea
 ### Functions
 
 ```javascript
-object = document.querySelector('.selector');
+var object = document.querySelector('.selector');
+
+// Get objects faster – shortcut for above function.
+var object = $('.selector');
 
 // Add className to object
 object.addClass('className');
@@ -23,10 +26,10 @@ object.toggleClass('className');
 object.remove();
 
 // Add CSS to object or get style
-object.css('style', 'style');
+object.css('style', 'value');
 
 // Get or set data
-object.data('data-attribute', 'value');
+object.data('name', 'value');
 
 // Merge two objects
 merge(objectA, objectB);

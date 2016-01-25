@@ -2,6 +2,10 @@
 
 Jazzify is a collection of often used little helper functions. Like jQuery in easy and lightweight.
 
+### Moral License / Support me
+
+You can buy a moral license and support me with buying me a cup of coffee via [PayPal](https://www.paypal.me/jakobploens/3,50).
+
 ### Functions
 
 ```javascript

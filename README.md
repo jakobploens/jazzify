@@ -35,6 +35,14 @@ object.css('style', 'value');
 // Get or set data
 object.data('name', 'value');
 
+// Get or set attribute
+object.attr('name', 'value');
+
+// Loop through a NodeList with multiple elements
+object.each(function(index, element){
+    // do something. element is the current element.
+});
+
 // Merge two objects
 merge(objectA, objectB);
 ```

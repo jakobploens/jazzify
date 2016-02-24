@@ -124,6 +124,33 @@ Object.prototype.data = function(name, value){
     }
 };
 
+/**
+ * attr
+ *
+ * @return object or attr value
+ * @since  1.2
+ */
+Object.prototype.attr = function(name, value){
+    if(value && value !== ""){
+        this.setAttribute(name) = value;
+        return this;
+    } else {
+        return this.getAttribute(name);
+    }
+};
+
+/**
+ * each
+ * Useable on NodeLists only
+ *
+ * @since  1.2
+ */
+Object.prototype.each = function(callback, scope){
+    for(var i = 0; i < this.length; i++){
+        callback.call(scope, i, this[i]);
+    }
+};
+
 
 
 

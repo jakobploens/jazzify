@@ -3,7 +3,7 @@
  *
  * @copyright Jakob Ploens 2016
  * @author    Jakob Ploens <jakob@2helden.com>
- * @version   1.1
+ * @version   1.3
  */
 
 
@@ -151,6 +151,33 @@ Object.prototype.each = function(callback, scope){
     }
 };
 
+/**
+ * on
+ * Attaches event on object
+ *
+ * @since  1.3
+ */
+Object.prototype.on = function(e, callback, capture){
+    if(this.addEventListener){
+        this.addEventListener(e, callback, capture || false);
+    } else if(this.attachEvent){
+        this.attachEvent('on' + e, callback);
+    }
+};
+
+/**
+ * find
+ * Returns nodelist or object
+ *
+ * @return object
+ * @since  1.3
+ */
+Object.prototype.find = function(selector){
+    var elements = this.querySelectorAll(selector);
+    if(elements.length === 1) return elements[0];
+    return elements;
+};
+
 
 
 
@@ -182,8 +209,8 @@ var merge = function(objectA, objectB){
 };
 
 /**
- * Shortcut for $
+ * Shortcut for document.find()
  */
 var $ = function(selector){
-    return document.querySelectorAll(selector);
+    return document.find(selector);
 };

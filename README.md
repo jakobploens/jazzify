@@ -11,7 +11,7 @@ You can buy a moral license and support me with buying me a cup of coffee via [P
 ```javascript
 var object = document.querySelector('.selector');
 
-// Get objects faster – shortcut for above function.
+// Get objects faster – shortcut for above function. Returns either an object or the NodeList. Shortcut for document.find(selector)
 var object = $('.selector');
 
 // Add className to object
@@ -42,6 +42,12 @@ object.attr('name', 'value');
 object.each(function(index, element){
     // do something. element is the current element.
 });
+
+// Attach event handlers
+object.on('event', callback);
+
+// Find element(s) in given scope
+object.find('.selector');
 
 // Merge two objects
 merge(objectA, objectB);

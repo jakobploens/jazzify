@@ -30,6 +30,8 @@ Object.prototype.addClass = function(className){
     } else {
         this.className += ' ' + className;
     }
+
+    return this;
 };
 
 /**
@@ -45,6 +47,8 @@ Object.prototype.removeClass = function(className){
     } else {
         this.className = this.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
     }
+
+    return this;
 };
 
 /**
@@ -56,9 +60,9 @@ Object.prototype.removeClass = function(className){
  */
 Object.prototype.hasClass = function(className){
     if (this.classList){
-        this.classList.contains(className);
+        return this.classList.contains(className);
     } else {
-        new RegExp('(^| )' + className + '( |$)', 'gi').test(this.className);
+        return new RegExp('(^| )' + className + '( |$)', 'gi').test(this.className);
     }
 };
 
@@ -84,6 +88,8 @@ Object.prototype.toggleClass = function(className){
         }
         this.className = classes.join(' ');
     }
+
+    return this;
 };
 
 /**
@@ -105,6 +111,7 @@ Object.prototype.remove = function(){
 Object.prototype.css = function(name, value){
     if(value && value !== ""){
         this.style[name] = value;
+        return this;
     } else {
         return this.style[name];
     }
@@ -119,6 +126,7 @@ Object.prototype.css = function(name, value){
 Object.prototype.data = function(name, value){
     if(value && value !== ""){
         this.setAttribute('data-' + name) = value;
+        return this;
     } else {
         return this.getAttribute('data-' + name);
     }
@@ -163,6 +171,7 @@ Object.prototype.on = function(e, callback, capture){
     } else if(this.attachEvent){
         this.attachEvent('on' + e, callback);
     }
+    return this;
 };
 
 /**

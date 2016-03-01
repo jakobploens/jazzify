@@ -3,7 +3,7 @@
  *
  * @copyright Jakob Ploens 2016
  * @author    Jakob Ploens <jakob@2helden.com>
- * @version   1.3
+ * @version   1.4
  */
 
 
@@ -125,7 +125,7 @@ Object.prototype.css = function(name, value){
  */
 Object.prototype.data = function(name, value){
     if(value && value !== ""){
-        this.setAttribute('data-' + name) = value;
+        this.setAttribute('data-' + name, value);
         return this;
     } else {
         return this.getAttribute('data-' + name);
@@ -140,11 +140,22 @@ Object.prototype.data = function(name, value){
  */
 Object.prototype.attr = function(name, value){
     if(value && value !== ""){
-        this.setAttribute(name) = value;
+        this.setAttribute(name, value);
         return this;
     } else {
         return this.getAttribute(name);
     }
+};
+
+/**
+ * removeAttr
+ *
+ * @return object
+ * @since  1.4
+ */
+Object.prototype.removeAttr = function(name){
+    this.removeAttribute(name) = value;
+    return this;
 };
 
 /**
@@ -185,6 +196,28 @@ Object.prototype.find = function(selector){
     var elements = this.querySelectorAll(selector);
     if(elements.length === 1) return elements[0];
     return elements;
+};
+
+/**
+ * first
+ * Returns first of nodelist
+ *
+ * @return object
+ * @since  1.4
+ */
+Object.prototype.first = function(){
+    return this[0];
+};
+
+/**
+ * last
+ * Returns last of nodelist
+ *
+ * @return object
+ * @since  1.4
+ */
+Object.prototype.last = function(){
+    return this[this.length - 1];
 };
 
 

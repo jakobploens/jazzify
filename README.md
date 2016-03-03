@@ -9,10 +9,8 @@ You can buy a moral license and support me with buying me a cup of coffee via [P
 ### Functions
 
 ```javascript
-var object = document.querySelector('.selector');
-
-// Returns either an object or the NodeList. Shortcut for document.find(selector)
-var object = $('.selector');
+// Shortcut for document.find(selector)
+var element = $('.selector');
 
 // Find element(s) in given scope
 element.find('.selector');

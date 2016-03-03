@@ -1,5 +1,5 @@
 /**
- * Jazzify adds helpers to vanilla JS and adds chaining functionality.
+ * Jazzify adds cross browser helpers and chaining functionality to vanilla JS.
  *
  * @copyright Jakob Ploens 2016
  * @author    Jakob Ploens <jakob@2helden.com>
@@ -9,22 +9,35 @@
 
 /**
  * -----------------------------------------------------------------------------
- * Object prototype functions
- * Use like object.addClass(), where object = document.querySelector('.elem')
+ * Element prototype functions
  *
  * @since 1.0
  * -----------------------------------------------------------------------------
  */
 
+/**
+ * find
+ * Returns nodelist or object
+ *
+ * @param String Selector
+ * @param Boolean Force return of NodeList
+ * @return Element or NodeList
+ * @since  1.3
+ */
+Element.prototype.find = function(selector, nodelist){
+    var elements = this.querySelectorAll(selector);
+    if(elements.length === 1 && !nodelist) return elements[0];
+    return elements;
+};
 
 /**
  * addClass
  *
- * @param  string class name
- * @return object
+ * @param  String Class name
+ * @return Element
  * @since  1.0
  */
-Object.prototype.addClass = function(className){
+Element.prototype.addClass = function(className){
     if(this.classList){
         this.classList.add(className);
     } else {
@@ -37,11 +50,11 @@ Object.prototype.addClass = function(className){
 /**
  * removeClass
  *
- * @param  string class name
- * @return object
+ * @param  String Class name
+ * @return Element
  * @since  1.0
  */
-Object.prototype.removeClass = function(className){
+Element.prototype.removeClass = function(className){
     if (this.classList){
         this.classList.remove(className);
     } else {
@@ -54,11 +67,11 @@ Object.prototype.removeClass = function(className){
 /**
  * hasClass
  *
- * @param  string class name
- * @return object
+ * @param  String Class name
+ * @return Boolean
  * @since  1.0
  */
-Object.prototype.hasClass = function(className){
+Element.prototype.hasClass = function(className){
     if (this.classList){
         return this.classList.contains(className);
     } else {
@@ -69,11 +82,11 @@ Object.prototype.hasClass = function(className){
 /**
  * toggleClass
  *
- * @param  string class name
- * @return object
+ * @param  String Class name
+ * @return Element
  * @since  1.0
  */
-Object.prototype.toggleClass = function(className){
+Element.prototype.toggleClass = function(className){
     if(this.classList){
         this.classList.toggle(className);
 
@@ -95,20 +108,33 @@ Object.prototype.toggleClass = function(className){
 /**
  * remove
  *
- * @return object
  * @since  1.1
  */
-Object.prototype.remove = function(){
+Element.prototype.remove = function(){
     this.parentNode.removeChild(this);
+};
+
+/**
+ * prependChild
+ *
+ * @param  Element Child
+ * @return Element
+ * @since  1.4
+ */
+Element.prototype.prependChild = function(child){
+    this.insertBefore(child, this.firstChild);
+    return child;
 };
 
 /**
  * css
  *
- * @return object or css value
+ * @param String Name/Attribute
+ * @param String Value
+ * @return Element or String
  * @since  1.1
  */
-Object.prototype.css = function(name, value){
+Element.prototype.css = function(name, value){
     if(value && value !== ""){
         this.style[name] = value;
         return this;
@@ -120,10 +146,12 @@ Object.prototype.css = function(name, value){
 /**
  * data
  *
- * @return object or data value
+ * @param String Name/Attribute
+ * @param String Value
+ * @return Element or String
  * @since  1.1
  */
-Object.prototype.data = function(name, value){
+Element.prototype.data = function(name, value){
     if(value && value !== ""){
         this.setAttribute('data-' + name, value);
         return this;
@@ -135,10 +163,12 @@ Object.prototype.data = function(name, value){
 /**
  * attr
  *
- * @return object or attr value
+ * @param String Name/Attribute
+ * @param String Value
+ * @return Element or String
  * @since  1.2
  */
-Object.prototype.attr = function(name, value){
+Element.prototype.attr = function(name, value){
     if(value && value !== ""){
         this.setAttribute(name, value);
         return this;
@@ -150,33 +180,25 @@ Object.prototype.attr = function(name, value){
 /**
  * removeAttr
  *
- * @return object
+ * @return Element
  * @since  1.4
  */
-Object.prototype.removeAttr = function(name){
-    this.removeAttribute(name) = value;
+Element.prototype.removeAttr = function(name){
+    this.removeAttribute(name);
     return this;
-};
-
-/**
- * each
- * Useable on NodeLists only
- *
- * @since  1.2
- */
-Object.prototype.each = function(callback, scope){
-    for(var i = 0; i < this.length; i++){
-        callback.call(scope, i, this[i]);
-    }
 };
 
 /**
  * on
  * Attaches event on object
  *
+ * @param String Event name
+ * @param Function Callback function
+ * @param Boolean Capture
+ * @return Element
  * @since  1.3
  */
-Object.prototype.on = function(e, callback, capture){
+Element.prototype.on = function(e, callback, capture){
     if(this.addEventListener){
         this.addEventListener(e, callback, capture || false);
     } else if(this.attachEvent){
@@ -185,27 +207,57 @@ Object.prototype.on = function(e, callback, capture){
     return this;
 };
 
+
+
+
 /**
- * find
- * Returns nodelist or object
+ * -----------------------------------------------------------------------------
+ * NodeList prototype functions
  *
- * @return object
- * @since  1.3
+ * @since 1.2
+ * -----------------------------------------------------------------------------
  */
-Object.prototype.find = function(selector){
-    var elements = this.querySelectorAll(selector);
-    if(elements.length === 1) return elements[0];
-    return elements;
+
+/**
+ * each
+ *
+ * @param Function Callback
+ * @param String Function's scope
+ * @return NodeList
+ * @since  1.2
+ */
+NodeList.prototype.each = function(callback, scope){
+    for(var i = 0; i < this.length; i++){
+        callback.call(scope, i, this[i]);
+    }
+    return this;
+};
+
+/**
+ * on
+ * Adds on() events on each element from Nodelist
+ *
+ * @param String Event name
+ * @param Function Callback function
+ * @param Boolean Capture
+ * @return NodeList
+ * @since  1.4
+ */
+NodeList.prototype.on = function(e, callback, capture){
+    this.each(function(i, el){
+        el.on(e, callback, capture);
+    });
+    return this;
 };
 
 /**
  * first
  * Returns first of nodelist
  *
- * @return object
+ * @return Element
  * @since  1.4
  */
-Object.prototype.first = function(){
+NodeList.prototype.first = function(){
     return this[0];
 };
 
@@ -213,11 +265,36 @@ Object.prototype.first = function(){
  * last
  * Returns last of nodelist
  *
- * @return object
+ * @return Element
  * @since  1.4
  */
-Object.prototype.last = function(){
+NodeList.prototype.last = function(){
     return this[this.length - 1];
+};
+
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * Object functions
+ *
+ * @since 1.0
+ * -----------------------------------------------------------------------------
+ */
+
+/**
+ * Merge Objects
+ * Merges object into this.
+ *
+ * @param  Object Object that will be merged into this
+ * @return Object Result object
+ * @since  1.0
+ */
+Object.prototype.mergeWith = function(object){
+    for(var attr in object){
+        this[attr] = object[attr];
+    }
+    return this;
 };
 
 
@@ -233,26 +310,8 @@ Object.prototype.last = function(){
  */
 
 /**
- * Short function to merge two objects.
- *
- * @param  object (gets overwritten)
- * @param  object (overwrites)
- * @return object (merged)
- */
-var merge = function(objectA, objectB){
-    var result = {};
-    for(var attr in objectA){
-        result[attr] = objectA[attr];
-    }
-    for(var attr in objectB){
-        result[attr] = objectB[attr];
-    }
-    return result;
-};
-
-/**
  * Shortcut for document.find()
  */
-var $ = function(selector){
+window.$ = function(selector){
     return document.find(selector);
 };

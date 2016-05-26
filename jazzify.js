@@ -3,7 +3,7 @@
  *
  * @copyright Jakob Ploens 2016
  * @author    Jakob Ploens <jakob@2helden.com>
- * @version   1.4
+ * @version   1.5
  */
 
 
@@ -14,21 +14,6 @@
  * @since 1.0
  * -----------------------------------------------------------------------------
  */
-
-/**
- * find
- * Returns nodelist or object
- *
- * @param String Selector
- * @param Boolean Force return of NodeList
- * @return Element or NodeList
- * @since  1.3
- */
-Element.prototype.find = function(selector, nodelist){
-    var elements = this.querySelectorAll(selector);
-    if(elements.length === 1 && !nodelist) return elements[0];
-    return elements;
-};
 
 /**
  * addClass
@@ -205,6 +190,46 @@ Element.prototype.on = function(e, callback, capture){
         this.attachEvent('on' + e, callback);
     }
     return this;
+};
+
+/**
+ * fire
+ * Fires event on object
+ *
+ * @param String Event name
+ * @param Object detailed data
+ * @return Element
+ * @since  1.5
+ */
+Element.prototype.fire = function(e, data){
+    if(!data){
+        var data = {};
+    }
+
+    if(window.CustomEvent){
+        var event = new CustomEvent(e, {detail: data});
+    } else {
+        var event = document.createEvent('CustomEvent');
+        event.initCustomEvent(e, true, true, data);
+    }
+
+    this.dispatchEvent(event);
+    return this;
+};
+
+/**
+ * find
+ * Returns nodelist or object
+ *
+ * @param String Selector
+ * @param Boolean Force return of NodeList
+ * @return Element or NodeList
+ * @since  1.3
+ */
+Element.prototype.find = function(selector, nodelist){
+    var elements = this.querySelectorAll(selector);
+    if(elements.length === 1 && !nodelist) return elements[0];
+    return elements;
 };
 
 
